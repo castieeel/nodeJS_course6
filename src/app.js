@@ -18,22 +18,25 @@ const server = http.createServer((request, response) => {
     response.end();
 
     return;
-  } else if (request.url === "?hello=<name>") {
+  } else if (request.url === "?hello=") {
+    const params = request.url.searchParams;
+    const name = params.get("hello");
+    console.log(name);
     response.status = 200;
     response.statusMessage = "OK";
     response.header = "Content-Type: text/plain";
-    response.write("Hello,.");
+    response.write(`Hello,${name}`);
     response.end();
 
     return;
-  } else if (request.url === "/?hello") {
-    response.status = 400;
-    response.statusMessage = "Bad Request";
-    response.header = "Content-Type: text/plain";
-    response.write("Enter a name");
-    response.end();
+    // } else if (request.url === "/?hello") {
+    //   response.status = 400;
+    //   response.statusMessage = "Bad Request";
+    //   response.header = "Content-Type: text/plain";
+    //   response.write("Enter a name");
+    //   response.end();
 
-    return;
+    //   return;
   } else {
     response.status = 500;
     response.statusMessage = "Internal Server Error";
