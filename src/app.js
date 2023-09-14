@@ -2,6 +2,10 @@ const http = require("http");
 const getUsers = require("./modules/users");
 
 const server = http.createServer((request, response) => {
+  const params = new URL(request.url);
+  const url = params.searchParams;
+  console.log(url);
+
   if (request.url === "/") {
     response.status = 200;
     response.statusMessage = "OK";
@@ -18,9 +22,8 @@ const server = http.createServer((request, response) => {
     response.end();
 
     return;
-  } else if (request.url === "?hello=") {
-    const params = request.url.searchParams;
-    const name = params.get("hello");
+  } else if (url.has("hello")) {
+    const name = url.get("hello");
     console.log(name);
     response.status = 200;
     response.statusMessage = "OK";
